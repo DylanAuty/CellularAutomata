@@ -5,7 +5,7 @@
 #include "CellularAutomaton.hpp"
 
 CellularAutomaton::CellularAutomaton(int height, int width, int seed)
-: _width(width), _height(height), _seed(seed), _udist(0, 1) {
+: _width(width), _height(height), _seed(seed), _bdist(0.2) {
 	std::cout << "Cellular Automaton with width " << width << " and height " << height << std::endl;
 	_rng.seed(_seed);
 
@@ -16,7 +16,7 @@ CellularAutomaton::CellularAutomaton(int height, int width, int seed)
 
 
 CellularAutomaton::CellularAutomaton(int height, int width)
-: _width(width), _height(height), _udist(0, 1) {
+: _width(width), _height(height), _bdist(0.2) {
 	std::cout << "Cellular Automaton with width " << width << " and height " << height << std::endl;
 	_seed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 	_rng.seed(_seed);
@@ -28,13 +28,14 @@ CellularAutomaton::CellularAutomaton(int height, int width)
 void CellularAutomaton::_random_init_grid() {
 	for (int y = 0; y < _height; y++) {
 		for (int x = 0; x < _width; x++) {
-			_grid[x][y] = _udist(_rng);
+			_grid[x][y] = _bdist(_rng);
 		}
 	}
 }
 
 void CellularAutomaton::print_grid() {
 	char printchars[2] = {' ', '#'};
+	std::cout << std::endl;
 	for (int y = 0; y < _height; y++) {
 		for (int x = 0; x < _width; x++) {
 			std::cout << printchars[_grid[x][y]];
@@ -45,11 +46,22 @@ void CellularAutomaton::print_grid() {
 
 void CellularAutomaton::step() {
 	_count_live_neighbours();
+	for (int y = 0; y < _height; y++) {
+		for (int x = 0; x < _width; x++) {
+			if (_grid[x][y] == 0 && _num_neighbours_grid[x][y] == 3) {
+				_grid[x][y] = true;
+			} else if (_grid[x][y] == 1 && (_num_neighbours_grid[x][y] == 2 || _num_neighbours_grid[x][y] == 3)) {
+				_grid[x][y] = true;
+			} else {
+				_grid[x][y] = false;
+			}
+		}
+	}
 }
 
 void CellularAutomaton::_count_live_neighbours() {
 	for (int y = 0; y < _height; y++) {
-		for (int x = 0; x < _height; x++) {
+		for (int x = 0; x < _width; x++) {
 			int neighbours[8][2] = {
 				{(x - 1 + _width) % _width, (y - 1 + _height) % _height},
 				{(x - 1 + _width) % _width, (y) % _height},
