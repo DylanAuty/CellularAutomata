@@ -12,6 +12,6 @@ int main(int, char**) {
     while(1) {
         gol_ca.print_grid();
         gol_ca.step();
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
