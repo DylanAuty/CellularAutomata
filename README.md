@@ -4,6 +4,8 @@ A simulator for simple 2D cellular automata, like Conway's Game of Life, written
 Rules are expressed as a state transition table: in each state, what is the mapping from number of neighbours to next state?
 The simulation is printed to the terminal, step by step.
 
+Below is the simulator running Conway's Game of Life:
+
 <img src="demo.gif" alt="Gif of the simulator running Conway's Game of Life.">
 
 
