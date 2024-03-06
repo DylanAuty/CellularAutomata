@@ -44,7 +44,7 @@ class CellularAutomaton {
 		std::vector<std::vector<int>> _grid;				// Stores grid of cell states
 		std::vector<std::vector<int>> _num_neighbours_grid;	// Stores number of neighbours each cell has.
 		std::mt19937 _rng;	// RNG
-		std::bernoulli_distribution _bdist;		// Bernoulli distribution to sample from
+		std::bernoulli_distribution _bdist;			// Bernoulli distribution to sample from
 		std::uniform_int_distribution<int> _udist;	// Uniform distribution to sample from, for state init.
 
 		/** Randomly initialise cell states in the grid. */

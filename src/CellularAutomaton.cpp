@@ -54,7 +54,7 @@ void CellularAutomaton::_random_init_grid() {
 
 
 const void CellularAutomaton::print_grid() {
-	char printchars[10] = {' ', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+	char printchars[2] = {' ', '0'};
 	std::cout << std::endl;
 	for (int y = 0; y < _height; y++) {
 		for (int x = 0; x < _width; x++) {
